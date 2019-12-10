@@ -2,11 +2,11 @@
 
 
 ## Installation
-	Required:
-	* Python 3
+Required:
+* Python 3
 
-git clone https://github.com/FayDoom/Strobe.git
-pip install --requirement requirements.txt
+    git clone https://github.com/FayDoom/Strobe.git
+    pip install --requirement requirements.txt
 
 ## Usage
 	python main.py
