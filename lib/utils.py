@@ -1,12 +1,12 @@
 import urllib.request as urllib
+import os
 import json
 import time
-import os
 
 
 class Utils:
 
-	savePath = os.path.expanduser('~/StrobeBackground')
+	savePath = os.path.expanduser('~/StrobeBackground')+'/'
 
 	@staticmethod
 	def httpRequest(url, retry=3, sleep=60):
@@ -28,8 +28,6 @@ class Utils:
 		return jsonData
 
 	@staticmethod
-	def getImagePath(subFolder):
-		path = Utils.savePath+'/'+subFolder+'/'
+	def getImagePath():
 		if not os.path.exists(Utils.savePath): os.makedirs(Utils.savePath)
-		if not os.path.exists(path): os.makedirs(path)
-		return path
+		return Utils.savePath

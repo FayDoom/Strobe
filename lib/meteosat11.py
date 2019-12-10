@@ -7,7 +7,6 @@ import sys
 class Meteosat11:
 
 	cooldown	  = 60*15
-	imgFolderName = 'Meteosat11'
 	datesUrl      = "https://rammb-slider.cira.colostate.edu/data/json/meteosat-11/full_disk/natural_color/latest_times.json"
 	earthImgUrl   = "https://rammb-slider.cira.colostate.edu/data/imagery/{date}/meteosat-11---full_disk/natural_color/{datetime}/01/{imgname}.png"
 
@@ -37,9 +36,9 @@ class Meteosat11:
 			imgBlobTab.append(Utils.httpRequest(url))
 		fullDiskImg = self.appendFullDiskImg(imgBlobTab)
 
-		imgPath = Utils.getImagePath(self.imgFolderName)+str(imgLink[0])+'.png'
+		imgPath = Utils.getImagePath()+'background.png'
 		fullDiskImg.save(imgPath)
-		return imgPath;
+		return imgPath
 
 	def appendFullDiskImg(self, imgBlobTab):
 		imgTab = []
