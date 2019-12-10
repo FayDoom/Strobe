@@ -16,7 +16,7 @@ class Utils:
 				data = urllib.request.urlopen(url).read()
 				break
 			except urllib.error.HTTPError as err:
-				--retry
+				retry-=1
 				time.sleep(sleep)
 		return data
 

@@ -23,7 +23,7 @@ class Strobe:
 				retry = 0
 			except Exception as err:
 				print("Error :", err, sys.exc_info()[0])
-				++retry
+				retry+=1
 			time.sleep(self.imageGetter.cooldown)
 
 	def setBackground(imagePath):
