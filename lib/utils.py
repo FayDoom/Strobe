@@ -1,4 +1,4 @@
-import urllib
+import urllib.request as urllib
 import json
 import time
 import os
@@ -13,9 +13,10 @@ class Utils:
 		while True:
 			if retry==0: raise TimeoutError('Utils.httpRequest timeout')
 			try:
-				data = urllib.request.urlopen(url).read()
+				data = urllib.urlopen(url).read()
 				break
-			except urllib.error.HTTPError as err:
+			except Exception as err:
+				print("aaa ",err)
 				retry-=1
 				time.sleep(sleep)
 		return data

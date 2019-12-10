@@ -15,7 +15,7 @@ class Meteosat11:
 		pass
 
 	def getImage(self):
-		self.getFullDiskImg()
+		return self.getFullDiskImg()
 
 	def getImgLink(self):
 		latestDate = Utils.httpRequestJson(self.datesUrl)["timestamps_int"][0]
