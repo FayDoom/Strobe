@@ -2,7 +2,7 @@
 Strobe updates your wallpaper automatically.
 For now, only one image collector is available (Meteosat-11 data)
 
-![Demo](https://faydoom.github.com/Strobe/demo.png)
+![Demo](https://github.com/FayDoom/Strobe/blob/master/demo.jpg)
 
 ## Installation
 	git clone https://github.com/FayDoom/Strobe.git
