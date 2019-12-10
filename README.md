@@ -9,9 +9,9 @@ For now, only one image collector is available (Meteosat-11 data)
 	pip install --requirement requirements.txt
 
 ## Usage
-	python main.py
+	"python main.py" or "pythonw main.py" to run in background
 
-## Run at startup (windows)
+## Run silently at startup (windows)
 	$path = "PATH TO main.py" #e.g.: "C:/Users/<username>/Desktop/Strobe/main.py"
 	$action  = New-ScheduledTaskAction -Execute 'pythonw.exe' -Argument $path
 	$trigger =  New-ScheduledTaskTrigger -AtStartup
