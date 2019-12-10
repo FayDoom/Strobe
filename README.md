@@ -6,8 +6,8 @@ Required:
 * Python 3
 * Git
 
-    # git clone https://github.com/FayDoom/Strobe.git
-	# pip install --requirement requirements.txt
+    git clone https://github.com/FayDoom/Strobe.git
+	pip install --requirement requirements.txt
 
 ## Usage
 	python main.py
