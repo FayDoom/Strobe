@@ -21,9 +21,11 @@ class Strobe:
 	def initTimeLoop(self):
 		retry = 0
 		while True:
-			if retry==4: break
+			if retry==5: break
 			try:
 				imgPath = self.imgConnecter.getImage()
+				if imgPath==False: continue
+				print("New image ->", imgPath)
 				self.setBackground(imgPath)
 				retry = 0
 			except Exception as err:

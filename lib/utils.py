@@ -16,7 +16,6 @@ class Utils:
 				data = urllib.urlopen(url).read()
 				break
 			except Exception as err:
-				print("aaa ",err)
 				retry-=1
 				time.sleep(sleep)
 		return data

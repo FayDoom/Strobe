@@ -9,6 +9,7 @@ class Meteosat11:
 	cooldown	  = 60*15
 	datesUrl      = "https://rammb-slider.cira.colostate.edu/data/json/meteosat-11/full_disk/natural_color/latest_times.json"
 	earthImgUrl   = "https://rammb-slider.cira.colostate.edu/data/imagery/{date}/meteosat-11---full_disk/natural_color/{datetime}/01/{imgname}.png"
+	lastDownload  = None
 
 	def __init_(self):
 		pass
@@ -30,6 +31,9 @@ class Meteosat11:
 
 	def getFullDiskImg(self):
 		imgLink    = self.getImgLink()
+		if self.lastDownload==imgLink[0]: return False
+		self.lastDownload = imgLink[0];
+
 		imgUrlTab  = imgLink[1]
 		imgBlobTab = [];
 		for url in imgUrlTab:
