@@ -6,53 +6,52 @@ from lib.utils import Utils
 
 
 class Connector:
-    def __init_(self, dates_url, images_url):
-        self.dates_url = dates_url
-        self.images_url = images_url
-        self.cooldown = 60 * 10
-        self.last_download = None
+    dates_url = ""
+    images_url = ""
+    cooldown = 60 * 10
+    last_download = None
 
-    def __init_(self):
-        pass
-
-    def getImgLink(self):
+    def get_image_link(self):
         raise NotImplementedError
 
-    def getImage(self):
-        return self.getFullDiskImg()
+    def get_image(self):
+        return self.get_full_disk_image()
 
-    def getFullDiskImg(self):
-        imgLink = self.getImgLink()
-        if self.last_download == imgLink[0]:
+    def get_full_disk_image(self):
+        image_link = self.get_image_link()
+        if self.last_download == image_link[0]:
             return False
-        self.last_download = imgLink[0]
+        self.last_download = image_link[0]
 
-        imgUrlTab = imgLink[1]
-        imgBlobTab = []
-        for url in imgUrlTab:
-            imgBlobTab.append(Utils.httpRequest(url))
-        fullDiskImg = self.appendFullDiskImg(imgBlobTab)
+        image_url_tab = image_link[1]
+        image_blob_tab = []
+        for url in image_url_tab:
+            image_blob_tab.append(Utils.http_request(url))
+        full_disk_image = self.append_full_disk_image(image_blob_tab)
 
-        imgPath = Utils.getImagePath()
-        fullDiskImg.save(imgPath)
-        return imgPath
+        image_path = Utils.get_image_path()
+        full_disk_image.save(image_path)
+        return image_path
 
-    def appendFullDiskImg(self, imgBlobTab):
-        imgTab = []
-        for blob in imgBlobTab:
-            imgTab.append(Image.open(BytesIO(blob)))
+    @staticmethod
+    def append_full_disk_image(image_blob_tab):
+        image_tab = []
+        for blob in image_blob_tab:
+            image_tab.append(Image.open(BytesIO(blob)))
 
-        fullDiskImg = Image.new(
+        full_disk_image = Image.new(
             "RGB",
             (
-                imgTab[0].size[0] + imgTab[1].size[0],
-                imgTab[0].size[1] + imgTab[2].size[1],
+                image_tab[0].size[0] + image_tab[1].size[0],
+                image_tab[0].size[1] + image_tab[2].size[1],
             ),
         )
 
-        fullDiskImg.paste(imgTab[0], (0, 0))
-        fullDiskImg.paste(imgTab[1], (imgTab[0].size[0], 0))
-        fullDiskImg.paste(imgTab[2], (0, imgTab[0].size[1]))
-        fullDiskImg.paste(imgTab[3], (imgTab[0].size[0], imgTab[0].size[1]))
+        full_disk_image.paste(image_tab[0], (0, 0))
+        full_disk_image.paste(image_tab[1], (image_tab[0].size[0], 0))
+        full_disk_image.paste(image_tab[2], (0, image_tab[0].size[1]))
+        full_disk_image.paste(
+            image_tab[3], (image_tab[0].size[0], image_tab[0].size[1])
+        )
 
-        return fullDiskImg
+        return full_disk_image
