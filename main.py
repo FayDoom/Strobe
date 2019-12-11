@@ -15,7 +15,7 @@ if __name__ == "__main__":
         "--platform",
         type=str,
         default="windows",
-        help="Specify platform (currently: windows, linux or freebsd, others WiP)",
+        help="Specify platform. Available : windows, linux or freebsd, others WiP (default : windows)",
     )
     parser.add_argument(
         "-s",
