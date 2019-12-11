@@ -15,72 +15,75 @@ except ValueError:
 
 
 class Strobe:
-    imgConnector = None
+    image_connector = None
 
-    def __init__(self, connectorName, platform):
+    def __init__(self, connector_name, platform):
         self.changer = "/usr/bin/Esetroot"
-        self.disp = ":0.0"
+        self.display = ":0.0"
         self.scaling = "-fit"  # None=off, '-scale', '-fit'
 
         self.platform = platform
 
-        if platform in ('linux', 'freebsd') and not os.path.exists(self.changer):
+        if platform in ("linux", "freebsd") and not os.path.exists(self.changer):
             print(
                 "You will need to install esetroot at /usr/bin/Esetroot for "
                 "this to work on linux or freebsd."
             )
 
-        self.setDefaultBackground()
-        self.initConnector(connectorName)
-        self.initTimeLoop()
+        self.set_default_background()
+        self.init_connector(connector_name)
+        self.init_time_loop()
 
-    def initConnector(self, connectorName):
+    def init_connector(self, connector_name):
         switch = {"meteosat11": Meteosat11, "himawari8": Himawari8}
-        connector = switch.get(connectorName.lower().replace("-", ""), 'meteosat11')
-        self.imgConnector = connector()
+        connector = switch.get(connector_name.lower().replace("-", ""), "meteosat11")
+        self.image_connector = connector()
 
-    def initTimeLoop(self):
+    def init_time_loop(self):
         retry = 0
         while True:
             if retry == 5:
                 break
             try:
-                imgPath = self.imgConnector.getImage()
-                if imgPath == False:
+                image_path = self.image_connector.get_image()
+                if not image_path:
                     continue
-                self.setBackground(imgPath)
+                self.set_background(image_path)
                 retry = 0
             except Exception as err:
                 print("Error :", err, sys.exc_info()[0])
                 retry += 1
-            time.sleep(self.imgConnector.cooldown)
+            time.sleep(self.image_connector.cooldown)
 
-    def setBackground(self, imgPath):
-        if self.platform in ('linux', 'freebsd'):
-            self._setBackgroundLinux(imgPath)
-        elif self.platform in 'windows':
-            self._setBackgroundWindows(imgPath)
+    def set_background(self, image_path):
+        if self.platform in ("linux", "freebsd"):
+            self._set_background_linux(image_path)
+        elif self.platform in "windows":
+            self._set_background_windows(image_path)
 
-    def _setBackgroundLinux(self, imgPath):
-        changecommand = [self.changer, "-d", self.disp, imgPath]
+    def _set_background_linux(self, image_path):
+        change_command = [self.changer, "-d", self.display, image_path]
         if self.scaling is not None:
-            changecommand.insert(1, self.scaling)
-        print("Calling '%s'", changecommand)
-        call(changecommand)
+            change_command.insert(1, self.scaling)
+        print("Calling '%s'", change_command)
+        call(change_command)
 
-    def _setBackgroundWindows(self, imgPath):
-        ctypes.WinDLL("user32").SystemParametersInfoW(20, 0, imgPath, 0)
+    @staticmethod
+    def _set_background_windows(image_path):
+        ctypes.WinDLL("user32").SystemParametersInfoW(20, 0, image_path, 0)
 
-    def setDefaultBackground(self):
-        if self.platform in ('linux', 'freebsd'):
-            self._setDefaultBackgroundLinux()
-        elif self.platform in ('windows'):
-            self._setDefaultBackgroundWindows()
+    def set_default_background(self):
+        if self.platform in ("linux", "freebsd"):
+            self._set_default_background_linux()
+        elif self.platform in "windows":
+            self._set_default_background_windows()
 
-    def _setDefaultBackgroundLinux(self):
-        self._setBackgroundLinux(Utils.getImagePath())
+    def _set_default_background_linux(self):
+        self._set_background_linux(Utils.get_image_path())
 
-    def _setDefaultBackgroundWindows(self):
+    # noinspection PyPep8Naming
+    @staticmethod
+    def _set_default_background_windows():
         SPI_SETDESKWALLPAPER = 0x0014
         SPIF_UPDATEINIFILE = 0x0001
         SPIF_SENDWININICHANGE = 0x0002
@@ -95,6 +98,6 @@ class Strobe:
         SystemParametersInfo(
             SPI_SETDESKWALLPAPER,
             0,
-            Utils.getImagePath(),
+            Utils.get_image_path(),
             SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE,
         )

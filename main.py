@@ -4,8 +4,8 @@ import argparse
 from lib.strobe import Strobe
 
 
-def main(connectorName, platform):
-    strobe = Strobe(connectorName, platform)
+def main(connector_name, platform):
+    Strobe(connector_name, platform)
 
 
 if __name__ == "__main__":
@@ -22,7 +22,8 @@ if __name__ == "__main__":
         "--source",
         type=str,
         default="meteosat11",
-        help="Image connector name. Available : meteosat11, himawari8 (default : meteosat11)",
+        help="Image connector name. Available : meteosat11, himawari8 "
+        "(default : meteosat11)",
     )
     args = parser.parse_args()
     main(args.source, args.platform)

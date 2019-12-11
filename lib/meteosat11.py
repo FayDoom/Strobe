@@ -1,64 +1,24 @@
-from io import BytesIO
-
-from PIL import Image
-
 from lib.utils import Utils
+from lib.connector import Connector
 
 
-class Meteosat11:
+class Meteosat11(Connector):
     cooldown = 60 * 15
-    datesUrl = "https://rammb-slider.cira.colostate.edu/data/json/meteosat-11/full_disk/natural_color/latest_times.json"
-    earthImgUrl = "https://rammb-slider.cira.colostate.edu/data/imagery/{date}/meteosat-11---full_disk/natural_color/{datetime}/01/{imgname}.png"
-    lastDownload = None
+    dates_url = (
+        "https://rammb-slider.cira.colostate.edu/data/json/meteosat-11/"
+        "full_disk/natural_color/latest_times.json"
+    )
+    images_url = (
+        "https://rammb-slider.cira.colostate.edu/data/imagery/{date}/"
+        "meteosat-11---full_disk/natural_color/{datetime}/01/{image_name}.png"
+    )
 
-    def __init_(self):
-        pass
-
-    def getImage(self):
-        return self.getFullDiskImg()
-
-    def getImgLink(self):
-        latestDate = Utils.httpRequestJson(self.datesUrl)["timestamps_int"][0]
-        imgUrlTemplate = self.earthImgUrl.format(
-            date=str(latestDate)[0:8], datetime=latestDate, imgname="{imgname}"
+    def get_image_link(self):
+        latest_date = Utils.http_request_json(self.dates_url)["timestamps_int"][0]
+        image_url_template = self.images_url.format(
+            date=str(latest_date)[0:8], datetime=latest_date, image_name="{image_name}"
         )
-        imgUrlTab = []
+        img_url_tab = []
         for s in ["000_000", "000_001", "001_000", "001_001"]:
-            imgUrlTab.append(imgUrlTemplate.format(imgname=s))
-        return [latestDate, imgUrlTab]
-
-    def getFullDiskImg(self):
-        imgLink = self.getImgLink()
-        if self.lastDownload == imgLink[0]:
-            return False
-        self.lastDownload = imgLink[0]
-
-        imgUrlTab = imgLink[1]
-        imgBlobTab = []
-        for url in imgUrlTab:
-            imgBlobTab.append(Utils.httpRequest(url))
-        fullDiskImg = self.appendFullDiskImg(imgBlobTab)
-
-        imgPath = Utils.getImagePath()
-        fullDiskImg.save(imgPath)
-        return imgPath
-
-    def appendFullDiskImg(self, imgBlobTab):
-        imgTab = []
-        for blob in imgBlobTab:
-            imgTab.append(Image.open(BytesIO(blob)))
-
-        fullDiskImg = Image.new(
-            "RGB",
-            (
-                imgTab[0].size[0] + imgTab[1].size[0],
-                imgTab[0].size[1] + imgTab[2].size[1],
-            ),
-        )
-
-        fullDiskImg.paste(imgTab[0], (0, 0))
-        fullDiskImg.paste(imgTab[1], (imgTab[0].size[0], 0))
-        fullDiskImg.paste(imgTab[2], (0, imgTab[0].size[1]))
-        fullDiskImg.paste(imgTab[3], (imgTab[0].size[0], imgTab[0].size[1]))
-
-        return fullDiskImg
+            img_url_tab.append(image_url_template.format(image_name=s))
+        return [latest_date, img_url_tab]
