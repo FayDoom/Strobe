@@ -5,7 +5,7 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 ![Demo](https://github.com/FayDoom/Strobe/blob/master/himawari8.jpg)
 
 ## Installation
-	Compat with Windows only
+	Compat with Windows, linux, osx, freebsd
 
 	git clone https://github.com/FayDoom/Strobe.git
 	pip install --requirement requirements.txt
