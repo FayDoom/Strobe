@@ -1,14 +1,14 @@
 from lib.utils import Utils
 from io import BytesIO
 from PIL import Image
+import datetime
 import sys
 
+class Himawari8:
 
-class Meteosat11:
-
-	cooldown	  = 60*15
-	datesUrl      = "https://rammb-slider.cira.colostate.edu/data/json/meteosat-11/full_disk/natural_color/latest_times.json"
-	earthImgUrl   = "https://rammb-slider.cira.colostate.edu/data/imagery/{date}/meteosat-11---full_disk/natural_color/{datetime}/01/{imgname}.png"
+	cooldown	  = 60*10
+	datesUrl      = "http://himawari8-dl.nict.go.jp/himawari8/img/D531106/latest.json"
+	earthImgUrl   = "https://himawari8-dl.nict.go.jp/himawari8/img/D531106/2d/550/{y}/{m}/{d}/{imgname}.png"
 	lastDownload  = None
 
 	def __init_(self):
@@ -18,15 +18,17 @@ class Meteosat11:
 		return self.getFullDiskImg()
 
 	def getImgLink(self):
-		latestDate = Utils.httpRequestJson(self.datesUrl)["timestamps_int"][0]
+		latestDate     = Utils.httpRequestJson(self.datesUrl)["date"]
+		dateObj        = datetime.datetime.strptime(latestDate, '%Y-%m-%d %H:%M:%S')
 		imgUrlTemplate = self.earthImgUrl.format(
-			date     = str(latestDate)[0:8],
-			datetime = latestDate,
+			y = dateObj.strftime('%Y'),
+			m = dateObj.strftime('%m'),
+			d = dateObj.strftime('%d'),
 			imgname  = '{imgname}'
 		)
 		imgUrlTab = [];
-		for s in ['000_000', '000_001', '001_000', '001_001']:
-			imgUrlTab.append(imgUrlTemplate.format(imgname=s))
+		for s in ['0_0', '1_0', '0_1', '1_1']:
+			imgUrlTab.append(imgUrlTemplate.format(imgname=dateObj.strftime('%H%M%S')+'_'+s))
 		return [latestDate, imgUrlTab]
 
 	def getFullDiskImg(self):

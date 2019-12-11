@@ -1,8 +1,9 @@
 from lib.meteosat11 import Meteosat11
+from lib.himawari8 import Himawari8
 from lib.utils import Utils
-import time
-import ctypes
 from ctypes import wintypes
+import ctypes
+import time
 import sys
 
 
@@ -16,8 +17,8 @@ class Strobe:
 		self.initTimeLoop()
 
 	def initConnecter(self, connecterName):
-		switch = { "meteosat11" : Meteosat11 }
-		object = switch.get(connecterName.lower(), Meteosat11)
+		switch = { "meteosat11" : Meteosat11, "himawari8" : Himawari8 }
+		object = switch.get(connecterName.lower().replace("-", ""), Meteosat11)
 		self.imgConnecter = object()
 
 	def initTimeLoop(self):
