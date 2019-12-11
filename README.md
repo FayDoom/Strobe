@@ -12,7 +12,7 @@ There is only one source available yet (Meteosat-11 data)
 	"python main.py" or "pythonw main.py" to run in background
 
 ## Run silently at startup (windows)
-	$path = "PATH TO main.py" #e.g.: "C:/Users/<username>/Desktop/Strobe/main.py"
-	$action  = New-ScheduledTaskAction -Execute 'pythonw.exe' -Argument $path
-	$trigger =  New-ScheduledTaskTrigger -AtStartup
+	$path = '"PATH TO main.py"' #e.g.: '"C:\Users\<username>\Strobe\main.py"'
+	$action  = New-ScheduledTaskAction -Execute 'pythonw' -Argument $path
+	$trigger =  New-ScheduledTaskTrigger -AtLogon
 	Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Strobe-Wallpaper" -Description "Strobe, the wallpaper updater"

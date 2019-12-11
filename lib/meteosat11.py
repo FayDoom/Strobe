@@ -40,7 +40,7 @@ class Meteosat11:
 			imgBlobTab.append(Utils.httpRequest(url))
 		fullDiskImg = self.appendFullDiskImg(imgBlobTab)
 
-		imgPath = Utils.getImagePath()+'background.png'
+		imgPath = Utils.getImagePath()
 		fullDiskImg.save(imgPath)
 		return imgPath
 

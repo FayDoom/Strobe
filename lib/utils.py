@@ -6,7 +6,8 @@ import time
 
 class Utils:
 
-	savePath = os.path.expanduser('~/StrobeBackground')+'/'
+	savePath  = os.path.expanduser('~/StrobeBackground')+'/'
+	imageName = 'background.png'
 
 	@staticmethod
 	def httpRequest(url, retry=3, sleep=60):
@@ -29,4 +30,8 @@ class Utils:
 	@staticmethod
 	def getImagePath():
 		if not os.path.exists(Utils.savePath): os.makedirs(Utils.savePath)
-		return Utils.savePath
+		return Utils.savePath+Utils.imageName
+
+	@staticmethod
+	def isBackgroundImgExist():
+		return os.path.exists(Utils.getImagePath())
