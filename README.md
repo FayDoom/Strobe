@@ -15,7 +15,7 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 	(It's a pain in the a$$ to do it programmatically)
 
 ## Usage
-	"python main.py" or "pythonw main.py" to run in background
+	"python main.py -s meteosat11" or "pythonw main.py -s meteosat11" to run in background
 
 ### Run silently at startup (windows)
 	$source  = 'The source you want' #e.g.: 'himawari8' or 'meteosat11'
