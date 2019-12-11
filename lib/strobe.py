@@ -24,7 +24,7 @@ class Strobe:
 
         self.platform = platform
 
-        if platform in ('linux', 'freebsd') and not os.path.exists(self.changer):
+        if platform in ("linux", "freebsd") and not os.path.exists(self.changer):
             print(
                 "You will need to install esetroot at /usr/bin/Esetroot for "
                 "this to work on linux or freebsd."
@@ -36,7 +36,7 @@ class Strobe:
 
     def initConnector(self, connectorName):
         switch = {"meteosat11": Meteosat11, "himawari8": Himawari8}
-        connector = switch.get(connectorName.lower().replace("-", ""), 'meteosat11')
+        connector = switch.get(connectorName.lower().replace("-", ""), "meteosat11")
         self.imgConnector = connector()
 
     def initTimeLoop(self):
@@ -56,9 +56,9 @@ class Strobe:
             time.sleep(self.imgConnector.cooldown)
 
     def setBackground(self, imgPath):
-        if self.platform in ('linux', 'freebsd'):
+        if self.platform in ("linux", "freebsd"):
             self._setBackgroundLinux(imgPath)
-        elif self.platform in 'windows':
+        elif self.platform in "windows":
             self._setBackgroundWindows(imgPath)
 
     def _setBackgroundLinux(self, imgPath):
@@ -72,9 +72,9 @@ class Strobe:
         ctypes.WinDLL("user32").SystemParametersInfoW(20, 0, imgPath, 0)
 
     def setDefaultBackground(self):
-        if self.platform in ('linux', 'freebsd'):
+        if self.platform in ("linux", "freebsd"):
             self._setDefaultBackgroundLinux()
-        elif self.platform in ('windows'):
+        elif self.platform in ("windows"):
             self._setDefaultBackgroundWindows()
 
     def _setDefaultBackgroundLinux(self):
