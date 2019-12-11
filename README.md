@@ -1,3 +1,8 @@
+
+![LicenseBadge](https://img.shields.io/github/license/FayDoom/Strobe?style=for-the-badge)
+![SizeBadge](https://img.shields.io/github/repo-size/FayDoom/Strobe?style=for-the-badge)
+
+
 # Strobe
 Strobe updates your wallpaper automatically.
 There is two source available yet (Meteosat-11 and Himawari-8)
