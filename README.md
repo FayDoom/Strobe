@@ -5,7 +5,8 @@ There is only one source available yet (Meteosat-11 data)
 ![Demo](https://github.com/FayDoom/Strobe/blob/master/demo.jpg)
 
 ## Installation
-Compat with Windows only
+	Compat with Windows only
+	
 	git clone https://github.com/FayDoom/Strobe.git
 	pip install --requirement requirements.txt
 
