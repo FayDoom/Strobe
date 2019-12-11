@@ -10,7 +10,7 @@ There is only one source available yet (Meteosat-11 data)
 
 	There is no need to choose the background image manually, the program will do it for you.
 	But you have to set the "centered" background mode and choose the black filling color in your Windows settings.
-	(It'sa pain in the a$$ to do it programmatically)
+	(It's a pain in the a$$ to do it programmatically)
 
 ## Usage
 	"python main.py" or "pythonw main.py" to run in background
