@@ -8,10 +8,13 @@ There is only one source available yet (Meteosat-11 data)
 	git clone https://github.com/FayDoom/Strobe.git
 	pip install --requirement requirements.txt
 
+	There is no need to choose the background image manually, the program will do it for you.
+	But you have to set the "centered" background mode and choose black as the filling color in your Windows settings. (It'sa pain in the a$$ to do it programmatically)
+
 ## Usage
 	"python main.py" or "pythonw main.py" to run in background
 
-## Run silently at startup (windows)
+### Run silently at startup (windows)
 	$path = '"PATH TO main.py"' #e.g.: '"C:\Users\<username>\Strobe\main.py"'
 	$action  = New-ScheduledTaskAction -Execute 'pythonw' -Argument $path
 	$trigger =  New-ScheduledTaskTrigger -AtLogon
