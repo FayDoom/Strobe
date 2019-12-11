@@ -9,7 +9,7 @@ There is only one source available yet (Meteosat-11 data)
 	pip install --requirement requirements.txt
 
 	There is no need to choose the background image manually, the program will do it for you.
-	But you have to set the "centered" background mode and choose black as the filling color in your Windows settings.
+	But you have to set the "centered" background mode and choose the black filling color in your Windows settings.
 	(It'sa pain in the a$$ to do it programmatically)
 
 ## Usage
