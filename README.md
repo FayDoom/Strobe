@@ -15,13 +15,13 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 	(It's a pain in the a$$ to do it programmatically)
 
 ## Usage
-	"python main.py -s meteosat11" or "pythonw main.py -s meteosat11" to run in background
+	"python main.py" or "pythonw main.py" to run in background
 
 ### Run silently at startup (windows)
 	$source  = 'The source you want' #e.g.: 'himawari8' or 'meteosat11'
 	$path    = 'PATH TO main.py' #e.g.: 'C:\Users\<username>\Strobe\main.py'
 
-	$arg     = '"$path" -s $source'
+	$arg     = '"'+$path+'" -s '+$source+''
 	$action  = New-ScheduledTaskAction -Execute 'pythonw' -Argument $arg
 	$trigger =  New-ScheduledTaskTrigger -AtLogon
 	Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Strobe-Wallpaper" -Description "Strobe, the wallpaper updater"
