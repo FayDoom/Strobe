@@ -1,17 +1,34 @@
 import ctypes
+import os
 import sys
 import time
-from ctypes import wintypes
+from subprocess import call
 
 from lib.himawari8 import Himawari8
 from lib.meteosat11 import Meteosat11
 from lib.utils import Utils
 
+try:
+    from ctypes import wintypes
+except ValueError:
+    pass
+
 
 class Strobe:
     imgConnector = None
 
-    def __init__(self, connectorName):
+    def __init__(self, connectorName, platform):
+        self.changer = "/usr/bin/Esetroot"
+        self.disp = ":0.0"
+
+        self.platform = platform
+
+        if platform in ('linux', 'freebsd') and not os.path.exists(self.changer):
+            print(
+                "You will need to install esetroot at /usr/bin/Esetroot for "
+                "this to work on linux or freebsd."
+            )
+
         self.setDefaultBackground()
         self.initConnector(connectorName)
         self.initTimeLoop()
@@ -38,9 +55,29 @@ class Strobe:
             time.sleep(self.imgConnector.cooldown)
 
     def setBackground(self, imgPath):
+        if self.platform in ('linux', 'freebsd'):
+            self._setBackgroundLinux(imgPath)
+        elif self.platform in 'windows':
+            self._setBackgroundWindows(imgPath)
+
+    def _setBackgroundLinux(self, imgPath):
+        changecommand = [self.changer, "-scale", "-d", self.disp, imgPath]
+        print("Calling '%s'", changecommand)
+        call(changecommand)
+
+    def _setBackgroundWindows(self, imgPath):
         ctypes.WinDLL("user32").SystemParametersInfoW(20, 0, imgPath, 0)
 
     def setDefaultBackground(self):
+        if self.platform in ('linux', 'osx', 'freebsd'):
+            self._setDefaultBackgroundLinux()
+        elif self.platform in ('windows'):
+            self._setDefaultBackgroundWindows()
+
+    def _setDefaultBackgroundLinux(self):
+        self._setBackgroundLinux(Utils.getImagePath())
+
+    def _setDefaultBackgroundWindows(self):
         SPI_SETDESKWALLPAPER = 0x0014
         SPIF_UPDATEINIFILE = 0x0001
         SPIF_SENDWININICHANGE = 0x0002
