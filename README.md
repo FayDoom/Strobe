@@ -17,6 +17,10 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 ## Usage
 	"python main.py -s meteosat11" or "pythonw main.py -s meteosat11" to run in background
 
+	Man :
+	-p PLATFORM, --platform PLATFORM Specify platform. Available : windows, linux or freebsd, others WiP (default : windows)
+	-s SOURCE,   --source SOURCE	 Image connector name. Available : meteosat11, himawari8 (default : meteosat11)
+
 ### Run silently at startup (windows)
 	$source  = 'The source you want' #e.g.: 'himawari8' or 'meteosat11'
 	$path    = 'PATH TO main.py' #e.g.: 'C:\Users\<username>\Strobe\main.py'
