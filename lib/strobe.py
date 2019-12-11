@@ -69,7 +69,7 @@ class Strobe:
         ctypes.WinDLL("user32").SystemParametersInfoW(20, 0, imgPath, 0)
 
     def setDefaultBackground(self):
-        if self.platform in ('linux', 'osx', 'freebsd'):
+        if self.platform in ('linux', 'freebsd'):
             self._setDefaultBackgroundLinux()
         elif self.platform in ('windows'):
             self._setDefaultBackgroundWindows()
