@@ -20,6 +20,7 @@ class Strobe:
     def __init__(self, connectorName, platform):
         self.changer = "/usr/bin/Esetroot"
         self.disp = ":0.0"
+        self.scaling = "-fit"  # None=off, '-scale', '-fit'
 
         self.platform = platform
 
@@ -61,7 +62,9 @@ class Strobe:
             self._setBackgroundWindows(imgPath)
 
     def _setBackgroundLinux(self, imgPath):
-        changecommand = [self.changer, "-scale", "-d", self.disp, imgPath]
+        changecommand = [self.changer, "-d", self.disp, imgPath]
+        if self.scaling is not None:
+            changecommand.insert(1, self.scaling)
         print("Calling '%s'", changecommand)
         call(changecommand)
 
