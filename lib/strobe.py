@@ -18,8 +18,8 @@ class Strobe:
 
     def initConnector(self, connectorName):
         switch = {"meteosat11": Meteosat11, "himawari8": Himawari8}
-        object = switch.get(connectorName.lower().replace("-", ""), Meteosat11)
-        self.imgConnector = object()
+        connector = switch.get(connectorName.lower().replace("-", ""), 'meteosat11')
+        self.imgConnector = connector()
 
     def initTimeLoop(self):
         retry = 0
