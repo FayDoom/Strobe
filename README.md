@@ -5,7 +5,7 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 ![Demo](https://github.com/FayDoom/Strobe/blob/master/himawari8.jpg)
 
 ## Installation
-	Compat with Windows only
+	Compat with Windows, linux, osx, freebsd
 
 	git clone https://github.com/FayDoom/Strobe.git
 	pip install --requirement requirements.txt
@@ -15,7 +15,11 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 	(It's a pain in the a$$ to do it programmatically)
 
 ## Usage
-	"python main.py" or "pythonw main.py" to run in background
+	"python main.py -s meteosat11" or "pythonw main.py -s meteosat11" to run in background
+
+	Man :
+	-p PLATFORM, --platform PLATFORM Specify platform. Available : windows, linux or freebsd, others WiP (default : windows)
+	-s SOURCE,   --source SOURCE	 Image connector name. Available : meteosat11, himawari8 (default : meteosat11)
 
 ### Run silently at startup (windows)
 	$source  = 'The source you want' #e.g.: 'himawari8' or 'meteosat11'
