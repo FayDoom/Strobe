@@ -2,9 +2,11 @@
 import argparse
 
 from lib.strobe import Strobe
+from lib.utils import Utils
 
 
-def main(connector_name, platform):
+def main(connector_name, platform, max_size):
+    Utils.set_screen_size(max_size)
     Strobe(connector_name, platform)
 
 
@@ -22,8 +24,15 @@ if __name__ == "__main__":
         "--source",
         type=str,
         default="meteosat11",
-        help="Image connector name. Available : meteosat11, himawari8 "
+        help="Image connector name. Available : meteosat11, himawari8, europe"
         "(default : meteosat11)",
     )
+    parser.add_argument(
+        "-r",
+        "--resolution",
+        type=str,
+        default="1920x1080",
+        help="Wallpaper maximum resolution e.g.: 1440x900. (default: 1920x1080)",
+    )
     args = parser.parse_args()
-    main(args.source, args.platform)
+    main(args.source, args.platform, args.resolution)
