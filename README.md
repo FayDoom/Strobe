@@ -24,9 +24,9 @@ Available sources : Meteosat-8, Meteosat-11, Himawari-8, Goes-16, Goes-17, Terra
 
 	Man :
 	-p PLATFORM, --platform PLATFORM
-		Specify platform. Available : windows, linux or freebsd, others WiP (default : windows)
+		Specify platform. Available: windows, linux or freebsd, others WiP (default : windows)
 	-s SOURCE, --source SOURCE
-		Image source name. Available : meteosat8, meteosat11, himawari8, goes16, goes17, europe (default:meteosat11)
+		Image source name. Available: meteosat8, meteosat11, himawari8, goes16, goes17, europe (default:meteosat11)
 	-r RESOLUTION, --resolution RESOLUTION
 		Wallpaper maximum resolution e.g.: 1440x900. (default: 1920x1080)
 
