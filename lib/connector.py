@@ -4,16 +4,15 @@ from PIL import Image
 
 from lib.utils import Utils
 
-
 class Connector:
 	dates_url = ""
 	images_url = ""
-	cooldown = 60 * 30
-	connector_name = ""
+	source_name = ""
+	sources = {}
 	last_download = None
 
-	def __init__(self, connector_name):
-		self.connector_name = connector_name
+	def __init__(self, source_name):
+		self.source_name = source_name
 
 	def get_image_info(self):
 		raise NotImplementedError
@@ -23,6 +22,7 @@ class Connector:
 		if self.last_download == image_info["latest_date"]:
 			return False
 		self.last_download = image_info["latest_date"]
+
 		image_blob_tab = []
 		for y in range(len(image_info["url_tab"])):
 			image_blob_tab.append([])
@@ -52,6 +52,10 @@ class Connector:
 			for x in range(len(image_tab[0])):
 				full_image.paste(image_tab[y][x], (image_tab[0][0].size[0]*x, image_tab[0][0].size[1]*y))
 
+
+		return full_image
+
+		# Need to add crop + resizing
 		if "offset_x" in image_info:
 			max_width = full_image.size[0]-image_info["offset_x"]
 			if max_width>Utils.get_screen_size()["width"]:

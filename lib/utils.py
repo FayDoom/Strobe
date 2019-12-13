@@ -1,5 +1,5 @@
+import os, glob, imp
 import json
-import os
 import re
 import time
 import urllib.request as urllib
@@ -20,6 +20,7 @@ class Utils:
 				raise TimeoutError("Utils.http_request timeout")
 			try:
 				data = urllib.urlopen(url).read()
+				print("http_request", url)
 				break
 			except Exception as err:
 				print("Exception:", err)
@@ -56,3 +57,11 @@ class Utils:
 	@staticmethod
 	def get_screen_size():
 		return Utils.screen_size
+
+	@staticmethod
+	def import_modules_bulk(folder_path):
+		modules = {}
+		for path in glob.glob(os.path.join(os.path.dirname(__file__), folder_path, "[!_]*.py")):
+			name, ext = os.path.splitext(os.path.basename(path))
+			modules[name] = imp.load_source(name, path)
+		return modules

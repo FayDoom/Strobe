@@ -5,9 +5,9 @@ from lib.strobe import Strobe
 from lib.utils import Utils
 
 
-def main(connector_name, platform, max_size):
+def main(source_name, platform, max_size):
     Utils.set_screen_size(max_size)
-    Strobe(connector_name, platform)
+    Strobe(source_name, platform)
 
 
 if __name__ == "__main__":
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         "--source",
         type=str,
         default="meteosat11",
-        help="Image connector name. Available : meteosat11, himawari8, europe"
+        help="Image source name. Available : meteosat11, himawari8, europe"
         "(default : meteosat11)",
     )
     parser.add_argument(

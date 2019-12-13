@@ -16,7 +16,7 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 	pip install --requirement requirements.txt
 
 	There is no need to choose the background image manually, the program will do it for you.
-	But you have to set the "centered" background mode and choose the black filling color in your Windows settings.
+	But you have to set the "ajusted" background mode and choose the black filling color in your Windows settings.
 	(It's a pain in the a$$ to do it programmatically)
 
 ## Usage

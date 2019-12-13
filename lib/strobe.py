@@ -2,11 +2,11 @@ import ctypes
 import os
 import sys
 import time
+import pkgutil
+import importlib
 from subprocess import call
 
-from lib.himawari8 import Himawari8
-from lib.meteosat11 import Meteosat11
-from lib.terramodis import Terramodis
+from lib.connector import Connector
 from lib.utils import Utils
 
 try:
@@ -16,12 +16,16 @@ except ValueError:
 
 
 class Strobe:
-	image_connector = None
+	default_source = "meteosat11"
+	connector_list = {}
+	connector = None
+	cooldown = 60 * 30
 
-	def __init__(self, connector_name, platform):
+	def __init__(self, source_name, platform):
 		self.changer = "/usr/bin/Esetroot"
 		self.display = ":0.0"
 		self.scaling = "-fit"  # None=off, '-scale', '-fit'
+		self.source_name = source_name.lower().replace("-", "")
 
 		self.platform = platform
 
@@ -32,16 +36,23 @@ class Strobe:
 			)
 
 		self.set_default_background()
-		self.init_connector(connector_name)
+		self.import_connecter()
+		self.init_connector()
 		self.init_time_loop()
 
-	def init_connector(self, connector_name):
-		connector_name = connector_name.lower().replace("-", "")
-		switch = {"meteosat11": Meteosat11, "himawari8": Himawari8, "europe": Terramodis}
-		if not connector_name in switch:
-			connector_name = "meteosat11"
-		connector = switch.get(connector_name)
-		self.image_connector = connector(connector_name)
+	def init_connector(self):
+		for c in self.connector_list:
+			if self.source_name in self.connector_list[c].sources.keys():
+				self.connector = self.connector_list[c](self.source_name)
+				return
+		self.source_name = self.default_source
+		self.init_connector()
+
+	def import_connecter(self):
+		dir = os.path.dirname(__file__)
+		for (module_loader, name, ispkg) in pkgutil.iter_modules([dir]):
+			importlib.import_module('.' + name, __package__)
+		self.connector_list = {cls.__name__: cls for cls in Connector.__subclasses__()}
 
 	def init_time_loop(self):
 		retry = 0
@@ -49,7 +60,7 @@ class Strobe:
 			if retry == 5:
 				break
 			try:
-				image_path = self.image_connector.get_image()
+				image_path = self.connector.get_image()
 				if not image_path:
 					continue
 				self.set_background(image_path)
@@ -57,7 +68,8 @@ class Strobe:
 			except Exception as err:
 				print("Error :", err, sys.exc_info()[0])
 				retry += 1
-			time.sleep(self.image_connector.cooldown)
+			print("Sleep for "+str(self.connector.sources[self.source_name]["cooldown"])+"s")
+			time.sleep(self.connector.sources[self.source_name]["cooldown"])
 
 	def set_background(self, image_path):
 		if self.platform in ("linux", "freebsd"):
