@@ -4,13 +4,13 @@
 
 
 # Strobe
-Strobe updates your wallpaper automatically.
-There is two source available yet (Meteosat-11 and Himawari-8)
+Strobe updates your wallpaper automatically.  
+Available sources : Meteosat-8, Meteosat-11, Himawari-8, Goes-16, Goes-17, Terra's Modis instrument (for land pics)
 
-![Demo](https://github.com/FayDoom/Strobe/blob/master/himawari8.jpg)
+![Demo](https://github.com/FayDoom/Strobe/blob/master/goes16.jpg)
 
 ## Installation
-	Compat with Windows, linux, osx, freebsd
+	Compatible with Windows, linux, osx, freebsd
 
 	git clone https://github.com/FayDoom/Strobe.git
 	pip install --requirement requirements.txt
@@ -23,8 +23,12 @@ There is two source available yet (Meteosat-11 and Himawari-8)
 	"python main.py -s meteosat11" or "pythonw main.py -s meteosat11" to run in background
 
 	Man :
-	-p PLATFORM, --platform PLATFORM Specify platform. Available : windows, linux or freebsd, others WiP (default : windows)
-	-s SOURCE,   --source SOURCE	 Image connector name. Available : meteosat11, himawari8 (default : meteosat11)
+	-p PLATFORM, --platform PLATFORM
+		Specify platform. Available : windows, linux or freebsd, others WiP (default : windows)
+	-s SOURCE, --source SOURCE
+		Image source name. Available : meteosat8, meteosat11, himawari8, goes16, goes17, europe (default:meteosat11)
+	-r RESOLUTION, --resolution RESOLUTION
+		Wallpaper maximum resolution e.g.: 1440x900. (default: 1920x1080)
 
 ### Run silently at startup (windows)
 	$source  = 'The source you want' #e.g.: 'himawari8' or 'meteosat11'
