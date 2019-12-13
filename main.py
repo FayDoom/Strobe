@@ -24,7 +24,7 @@ if __name__ == "__main__":
         "--source",
         type=str,
         default="meteosat11",
-        help="Image source name. Available : meteosat11, himawari8, europe"
+        help="Image source name. Available :  meteosat8, meteosat11, himawari8, goes16, goes17, europe"
         "(default : meteosat11)",
     )
     parser.add_argument(
