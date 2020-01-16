@@ -15,7 +15,7 @@ Available sources : Meteosat-8, Meteosat-11, Himawari-8, Goes-16, Goes-17, Terra
 	git clone https://github.com/FayDoom/Strobe.git
 	pip install --requirement requirements.txt
 
-	There is no need to choose the background image manually, the program will do it for you.
+	There is no need to set the background image manually, the program will do it for you.
 	But you have to set the "ajusted" background mode and choose the black filling color in your Windows settings.
 	(It's a pain in the a$$ to do it programmatically)
 
